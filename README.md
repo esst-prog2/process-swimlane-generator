@@ -1,90 +1,125 @@
 # Process Swimlane Generator
 
-A Python tool that converts a structured process-mapping table into a swimlane diagram showing the sequence of tasks, responsible departments, process areas, and annual task frequency.
+A Windows Python command-line tool that converts an Excel task table into a
+horizontal department swimlane SVG. The MVP supports one complete linear
+process, including a process with just one task.
 
-## 1. The demo
+## Install on Windows
 
-I open a terminal and run `process-map examples/purchase_request.csv`. The program validates 12 sequential tasks belonging to four departments and creates `output/purchase_request_swimlane.svg`. I open the SVG and see four department swimlanes, with every task placed in the lane of its responsible department. Arrows show the process moving from the first task to the final task in one linear sequence, while each task displays its task number, description, process area, and annual frequency where provided. I then run the program with a non-linear example file, and it reports that the input cannot be processed because the first version supports only linear workflows.
+Tested with Python 3.13.0, openpyxl 3.1.5, and Excel 16.0 on Windows.
+Install Python 3.13 or newer with pip, then open PowerShell in this repository:
 
-## 2. The shape
-
-```text
-in           a CSV process-mapping table containing one row per task,
-             with a task ID, process section or area, task description,
-             responsible department, optional annual frequency, and the
-             ID of the next task
-
-out          an SVG swimlane diagram and a validation summary describing
-             any problems found in the input
-
-in between   validate that the input represents one complete linear
-             process; arrange departments as swimlanes; place each task
-             in the lane of its responsible department; connect every
-             task to its next task; and render the resulting diagram
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install .
+.\.venv\Scripts\process-map.exe --help
 ```
 
-The initial CSV format will contain the following columns:
+If Python is not on PATH, use its full executable path for the first command.
+No environment activation, Graphviz, or Excel automation is required to run the
+generator. Excel is used to edit inputs and calculate and save formula results.
 
-| Column             | Description                                                  | Required                       |
-| ------------------ | ------------------------------------------------------------ | ------------------------------ |
-| `task_id`          | A unique identifier for the task                             | Yes                            |
-| `section`          | The process section or area to which the task belongs        | Yes                            |
-| `task`             | A description of the task                                    | Yes                            |
-| `department`       | The department or function responsible for the task          | Yes                            |
-| `annual_frequency` | The estimated number of times the task is performed per year | No                             |
-| `next_task_id`     | The ID of the task that follows the current task             | Yes, except for the final task |
+## Run the demo
 
-Because the first useful version supports only linear processes, each task can have a maximum of one `next_task_id`. The final task has an empty `next_task_id`.
+```powershell
+.\.venv\Scripts\process-map.exe examples/purchase_request.xlsx
+```
 
-## 3. The size
+The synthetic example has **12 tasks, four departments, and 11 connections**.
+Success prints the output path and returns exit code zero. Open
+`output/purchase_request_swimlane.svg` in Edge or another browser. At native
+scale, scroll horizontally through the process. Long labels wrap inside task
+boxes; the diagram is not limited to one printed page.
 
-### First useful version
+Run again to create `purchase_request_swimlane_2.svg`, then `_3.svg`, and so on.
+The first available filename is used. The `output/` directory is relative to
+the directory from which you run the command. Existing diagrams are never
+overwritten. Validation and rendering finish before publication; failed runs
+preserve previous diagrams.
 
-* Read a linear process mapping from a documented CSV format.
-* Validate that all required columns are present and that every task has a unique task ID.
-* Validate that every `next_task_id` refers to an existing task.
-* Validate that the input contains one connected linear process with one starting task, one ending task, no branches, and no loops.
-* Create one swimlane for each department and place every task in the lane of its responsible department.
-* Display the task ID, task description, process section, and annual frequency where it is provided.
-* Connect the tasks with arrows according to their specified sequence.
-* Export the completed swimlane diagram as an SVG file.
-* Provide a documented command for generating the diagram.
-* Include small synthetic valid and invalid example files that can be used to demonstrate and test the project.
+## Prepare your workbook
 
-### Not part of the committed project scope this term
+Copy `examples/purchase_request.xlsx` as a reusable template. Its data is entirely
+invented; no confidential workplace mappings or code are included.
 
-* Processes containing branches, merges, or multiple successor tasks.
-* XOR, OR, or parallel workflow gateways.
-* Connections that loop back to an earlier task.
-* Full Business Process Model and Notation (BPMN) compliance.
-* Editing tasks through a graphical user interface.
-* Dragging or repositioning tasks manually.
-* Direct integration with SAP or other company systems.
-* Automatically comparing a current process with a proposed process side by side.
-* Collaborative editing, user accounts, or online deployment. 
-* Guaranteeing an ideal layout for every possible large workflow.
+Use a worksheet named **Process** with these literal headers in row 1:
 
-Branches, decision gateways, and loops are not required for the project to be considered complete. If the linear version is successfully implemented, tested, documented, and released ahead of schedule, I may investigate support for more advanced workflow structures as an optional extension toward the end of the project. The linear version will remain the required and independently useful final product.
+| Column | Header | Cell values |
+| --- | --- | --- |
+| A | `task_id` | Required unique text ID, e.g. `001` or `PR-01` |
+| B | `section` | Required nonblank text, shown inside the task |
+| C | `task` | Required nonblank task description |
+| D | `department` | Required nonblank text, determining the lane |
+| E | `annual_frequency` | Optional finite non-negative number, including decimals and zero |
+| F | `next_task_id` | Exact next task ID as text; blank for the final task |
 
-## 4. How we would know it works
+Tasks begin in row 2. Other worksheets and columns after F are ignored, so notes
+can remain there. Empty A-F rows are ignored, including gaps; partially filled
+rows must be valid. Do not merge cells in A-F or rename/reorder the headers.
 
-* Given an input file that is missing the `department` column, the program stops and reports an error that specifically names the missing column.
-* Given an input containing multiple successors or a connection that returns to an earlier task, the program stops and explains that the input is not a valid linear workflow.
-* Given the valid example file containing 12 sequential tasks in four departments, the output contains all 12 tasks, four department swimlanes, and the 11 connections required to form the complete sequence.
+The template's A and F columns are formatted as **Text**. When adding or pasting
+rows, retain Text formatting and enter IDs as text. Formatting an existing number
+as Text does not recover leading zeros: re-enter the original identifier.
+Numeric IDs are rejected even if Excel displays 1 as `001`. Matching is exact,
+including case and surrounding spaces; no trimming or conversion occurs.
+Department labels are exact too, so use consistent spelling.
 
-## 5. What could stop this
+Frequency accepts Excel numbers or dot-decimal text such as `0.5`. Localized
+Excel number display does not change the stored numeric value. Blank means not
+provided; zero is displayed as zero occurrences per year. Negatives, booleans,
+nonnumeric text, and non-finite values are rejected.
 
-* Automatically arranging tasks across multiple department lanes may produce crossing or difficult-to-read arrows, even when the underlying process is linear.
-* The rules defining a valid linear process must be precise enough for the program to identify disconnected tasks, multiple starting or ending tasks, branches, and loops.
-* I have not yet selected and tested the visualization library that will produce the final swimlane layout.
-* Long task descriptions or processes containing many tasks may make the generated diagram too large or difficult to read.
-* Supporting Excel files directly could introduce additional problems caused by formatting, formulas, merged cells, or differences between workbook structures.
-* The original version of this idea was developed by myself in a workplace context using Excel VBA, so the public project must remain separate from confidential company code, data, and internal process information.
+### Formulas
 
-### Data
+Input formulas use their **saved calculated values**. Recalculate and save in
+Excel before running the generator. It does not evaluate formulas, refresh links,
+or determine whether saved values are stale. Formula results obey normal column
+rules, including text-only IDs.
 
-The project idea comes from a real process-mapping need identified during workplace digitalization initiatives. Colleagues currently prepare the input mapping because they have the necessary knowledge about their own tasks, responsibilities, departments, and process sequence.
+Unavailable saved values and Excel errors produce a cell-specific message asking
+you to recalculate and save. A reader-exposed empty string counts as blank in an
+optional cell. Some blank formula results are exposed as no saved value instead
+and are reported as unavailable. Use a **literal blank cell** for an optional
+field in that case. The MVP does not inspect internal XLSX XML/cache states.
 
-The existing internal workbook, VBA code, company process mappings, and company data will not be published or used in the classroom demonstration. The repository will instead contain a small synthetic process-mapping file with invented tasks, departments, process areas, annual frequencies, and workflow connections.
+## Validation and diagrams
 
-The synthetic file will include a valid linear process for demonstrating the generated swimlane diagram. It will also include small invalid examples, such as a file with a missing required column and a file containing a branch or loop. These examples will allow the program and its tests to run without access to confidential workplace data.
+The successor links determine order independently of worksheet row order.
+There must be one start, one end, unique IDs, valid references, and one connected
+chain. Branches, merges, loops, and disconnected tasks are invalid. A successor
+cell names one exact ID, not a list. One task with no successor is valid; zero
+tasks are not.
+
+Department lanes follow first appearance in the linked sequence. Every task
+shows its ID, description, section, and frequency when provided.
+
+Errors appear only in the terminal, with row/cell/task context where possible.
+Invalid input returns a nonzero exit code and creates no new SVG. Try:
+
+```powershell
+.\.venv\Scripts\process-map.exe examples/invalid_missing_department.xlsx
+.\.venv\Scripts\process-map.exe examples/invalid_multiple_successors.xlsx
+.\.venv\Scripts\process-map.exe examples/invalid_loop.xlsx
+```
+
+## Development and verification
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Tests cover workbook and formula rules, chain validation, SVG structure, CLI
+exit codes, numbering, collisions, failure cleanup, and preservation of previous
+diagrams and input files. An Excel-saved regression fixture is included; Excel
+is not needed to run the suite. Developer scripts in `tests/` rebuild synthetic
+examples and verify editing through Excel. See `VERIFICATION.md` for acceptance
+results and their provenance.
+
+## Future work only
+
+Other input formats, flexible input layouts, combining multiple process sheets,
+branches/gateways/loops, full BPMN, graphical editing, manual layout, automatic
+comparison, company integrations, collaboration, accounts, online deployment,
+macOS/Linux support, and a standalone executable remain outside the MVP.
+No ideal layout is promised for arbitrarily large workflows.
