@@ -50,3 +50,4 @@
 2026-10-04 | Decided by user | Report the spike answer as a small evidence table plus two measured numbers: the percentage of examined processes that pass the current linear MVP and the median task count across all examined processes.
 2026-10-04 | Decided by user | Apply the decision rule from issue #3: if fewer than roughly half of the examined processes pass, or the median length is above roughly 25 tasks, treat the MVP as a demo and prioritize branching support rather than polish in the next project change.
 2026-10-04 | Decided by user | Record these spike decisions in PLANNING_LOG.md before any spike measurement begins; do not implement a feature or invent process observations or results.
+2026-10-04 | Decided by user | Before collecting Homework 4 spike data, sync the completed add-process-swimlane-mvp specifications into durable project specs and archive the change; leave implementation unchanged and do not begin spike measurement.
