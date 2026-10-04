@@ -1,1 +1,6 @@
 process_id,source_type,task_count,department_count,passed,first_failure_reason
+P01,workplace-anonymized,45,7,TRUE,
+P02,workplace-anonymized,8,6,TRUE,
+P03,workplace-anonymized,33,3,FALSE,Real process contains yes/no branching; workbook was flattened into a linear sequence and does not faithfully represent the branching structure
+P04,workplace-anonymized,14,4,TRUE,
+P05,workplace-anonymized,5,2,TRUE,
