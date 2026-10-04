@@ -44,3 +44,9 @@
 2026-09-26 | Decided by user | Investigate annual-frequency visibility after manual inspection of both previews, preserve nonblank and zero display with blank omission and safe sizing, regenerate both previews, and rerun tests and validation within the existing MVP requirement.
 2026-09-26 | Decided by assistant | Label the field Annual frequency instead of Per year and cycle preview frequencies through 120, 0.5, 0, and blank so all required display cases are visible; retain the explicit None check and add per-task and layout-bounds regression coverage.
 2026-09-26 | Decided by user | Approve the regenerated 12-task and 40-task SVG previews following the annual-frequency display update.
+2026-10-04 | Decided by user | Work on Homework 4 on the hw4-spike branch; the assigned spike from GitHub issue #3 asks: What share of real process maps are single linear chains, and how long are they?
+2026-10-04 | Decided by user | Examine 5-10 real processes from non-confidential workplace processes and/or published procedures.
+2026-10-04 | Decided by user | For each examined process, record task count, department count, whether the current Process Swimlane Generator MVP can represent it as a single linear chain, and the first failure reason when it cannot.
+2026-10-04 | Decided by user | Report the spike answer as a small evidence table plus two measured numbers: the percentage of examined processes that pass the current linear MVP and the median task count across all examined processes.
+2026-10-04 | Decided by user | Apply the decision rule from issue #3: if fewer than roughly half of the examined processes pass, or the median length is above roughly 25 tasks, treat the MVP as a demo and prioritize branching support rather than polish in the next project change.
+2026-10-04 | Decided by user | Record these spike decisions in PLANNING_LOG.md before any spike measurement begins; do not implement a feature or invent process observations or results.
