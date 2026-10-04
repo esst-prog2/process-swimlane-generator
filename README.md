@@ -116,6 +116,19 @@ is not needed to run the suite. Developer scripts in `tests/` rebuild synthetic
 examples and verify editing through Excel. See `VERIFICATION.md` for acceptance
 results and their provenance.
 
+## Homework 4 spike results
+
+We examined 5 anonymized real workplace processes: **4/5** were faithfully
+representable as single linear chains, a pass rate of **80.0%**, with a median
+process length of **14 tasks**. Neither issue #3 threshold was crossed
+(roughly below 50% passing or a median above 25 tasks), supporting the current
+linear MVP's usefulness for these sampled processes.
+
+P03 confirmed that yes/no branching is a real limitation: its flattened workbook
+passed the CLI, but its true process structure did not pass. Branching remains
+an important future capability. See the [spike evidence](spike/processes.csv)
+and [measurement notes](spike/README.md).
+
 ## Future work only
 
 Other input formats, flexible input layouts, combining multiple process sheets,
