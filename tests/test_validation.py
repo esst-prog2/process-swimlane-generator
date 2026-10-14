@@ -33,6 +33,12 @@ class ValidationTests(unittest.TestCase):
             with self.subTest(tasks=tasks), self.assertRaisesRegex(ValidationError, "linear workflow"):
                 validate_process(tasks)
 
+    def test_existing_punctuation_and_spaces_are_one_exact_id(self):
+        # Literal oracle: punctuation is part of the ID, and spaces are significant.
+        tasks = [task("finish"), task(" A,B ", "finish"), task("start", " A,B ")]
+        ordered = validate_process(tasks)
+        self.assertEqual([item.task_id for item in ordered], ["start", " A,B ", "finish"])
+
     def test_zero_and_one(self):
         with self.assertRaisesRegex(ValidationError, "At least one"):
             validate_process([])

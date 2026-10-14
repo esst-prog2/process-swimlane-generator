@@ -63,6 +63,38 @@ class CliTests(unittest.TestCase):
             self.assertIn("could not read workbook", result.stderr)
             self.assertFalse((self.root / "output").exists())
 
+    def test_invalid_values_and_empty_process_preserve_files(self):
+        # Expectations come from the workbook/CLI specs, not generated output.
+        cases = [
+            ("numeric ID", [[1, "Area", "Task", "Dept", None, None]], ("A2", "stored as text")),
+            ("numeric successor", [["001", "Area", "Task", "Dept", None, 1]], ("F2", "stored as text")),
+            ("missing formula cache", [["001", "Area", "=1+1", "Dept", None, None]], ("C2", "Recalculate and save")),
+            ("empty process", [], ("At least one task",)),
+        ]
+        output = self.root / "output"
+        output.mkdir()
+        sentinel = output / "sample_swimlane.svg"
+        sentinel.write_bytes(b"previous diagram must remain unchanged")
+        expected = {sentinel.name: b"previous diagram must remain unchanged"}
+        for name, rows, messages in cases:
+            with self.subTest(case=name):
+                book = Workbook()
+                sheet = book.active
+                sheet.title = "Process"
+                sheet.append(["task_id", "section", "task", "department", "annual_frequency", "next_task_id"])
+                for row in rows:
+                    sheet.append(row)
+                book.save(self.input)
+                book.close()
+                before = self.input.read_bytes()
+                result = self.run_cli(self.input)
+                self.assertNotEqual(result.returncode, 0)
+                for message in messages:
+                    self.assertIn(message, result.stderr)
+                self.assertNotIn("Created", result.stdout)
+                self.assertEqual(self.input.read_bytes(), before)
+                self.assertEqual({p.name: p.read_bytes() for p in output.iterdir()}, expected)
+
     def test_render_failure_does_not_publish(self):
         with patch("process_swimlane.cli.render_svg", side_effect=ValueError("render failed")), patch("process_swimlane.cli.publish_svg") as publish, redirect_stderr(StringIO()) as errors:
             self.assertEqual(main([str(self.input)]), 1)
