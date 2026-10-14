@@ -4,6 +4,9 @@ import subprocess
 import sys
 from xml.etree import ElementTree as ET
 
+if not __debug__:
+    raise SystemExit("Acceptance checks require assertions; run Python without -O or -OO and unset PYTHONOPTIMIZE.")
+
 repo = Path(__file__).resolve().parents[1]
 executable = Path(sys.executable).parent / "process-map.exe"
 source = repo / "examples" / "purchase_request.xlsx"
