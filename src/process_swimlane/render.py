@@ -85,7 +85,7 @@ def render_svg(tasks):
         x, y, height = positions[index]
         nx, ny, nh = positions[index+1]
         start, end, middle = y + height/2, ny + nh/2, x + BOX_WIDTH + GAP/2
-        path = element(root, "path", d=f"M {x+BOX_WIDTH} {start} H {middle} V {end} H {nx}", fill="none", stroke="#227d87", stroke_width=2, marker_end="url(#arrow)", data_kind="connection", data_source=tasks[index].task_id, data_target=tasks[index+1].task_id)
+        element(root, "path", d=f"M {x+BOX_WIDTH} {start} H {middle} V {end} H {nx}", fill="none", stroke="#227d87", stroke_width=2, marker_end="url(#arrow)", data_kind="connection", data_source=tasks[index].task_id, data_target=tasks[index+1].task_id)
     for task, lines, (x, y, height) in zip(tasks, task_lines, positions):
         group = element(root, "g", data_kind="task", data_id=task.task_id, data_department=task.department)
         element(group, "rect", x=x, y=y, width=BOX_WIDTH, height=height, rx=8, fill="#ffffff", stroke="#7892ab")
