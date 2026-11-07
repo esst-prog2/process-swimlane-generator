@@ -22,18 +22,18 @@ Consecutive tasks with exactly equal section values SHALL form one band in valid
 
 #### Scenario: Recurring phase and shuffled rows
 - **WHEN** shuffled workbook rows resolve to sections A, A, B, A
-- **THEN** the diagram has three bands spanning tasks 1-2, 3 and 4 in that order, and both A bands use the same colour
+- **THEN** the diagram has three bands spanning tasks 1-2, 3 and 4 in that order, exactly three band headings, and both A bands use the same colour
 
 #### Scenario: Small and frequently changing processes
 - **WHEN** the process has one task, one section across many tasks, or a different section at every task
 - **THEN** all tasks and arrows remain accessible with one band per consecutive section run and no spurious transition within a run
 
 ### Requirement: Readable section presentation in both outputs
-Both standalone SVG and HTML viewer SHALL show full wrapped, safely escaped section headings above bands, subtle vertical task-area tints and light dashed separators between bands. Wide bands SHALL repeat headings at bounded intervals for horizontal scrolling. Task text, arrows and department boundaries SHALL remain readable. Both formats SHALL share section and lane geometry; the viewer SHALL retain frozen, vertically aligned, visually neutral department labels. Colour SHALL NOT be the sole indication of grouping.
+Both standalone SVG and HTML viewer SHALL show exactly one full wrapped, safely escaped section heading per contiguous band, positioned near its beginning with consistent left padding. Headings SHALL NOT repeat periodically or per task and SHALL NOT be sticky. Subtle vertical task-area tints and light dashed separators SHALL distinguish bands. Task text, arrows and department boundaries SHALL remain readable. Both formats SHALL share section and lane geometry; the viewer SHALL retain frozen, vertically aligned, visually neutral department labels. Colour SHALL NOT be the sole indication of grouping.
 
 #### Scenario: Wide section with long or special text
 - **WHEN** a section has a long name with markup-significant characters and spans many tasks
-- **THEN** its complete name is escaped and wrapped in repeated headings without overlap with task lanes or neighboring headings, and the matching section text remains in task boxes
+- **THEN** its complete name is escaped and wrapped in exactly one band heading without clipping or overlap with task lanes or neighboring headings, and the matching section text remains in task boxes
 
 #### Scenario: Viewer and export parity
 - **WHEN** a diagram with multiple sections and unequal department lane heights is exported and viewed in HTML

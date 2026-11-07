@@ -157,6 +157,10 @@ recorded above. This report does not verify the forthcoming section bands.
 
 ## Section bands (2026-11-07)
 
+This section records the original repeated-heading implementation. The later
+one-heading refinement and user feedback are recorded below; its fresh visual
+check supersedes the original checklist for newly generated outputs.
+
 Branch `feature/section-bands` starts from the viewer branch at `ef8c72b`, which
 records user-reported manual viewer verification. Section proposal: `a1a8948`;
 implementation: `497275b`. This feature uses the existing column B and adds no
@@ -241,3 +245,51 @@ colours, headings, boundaries or the expanded header.
 Very long section names increase header height. Many distinct sections can have
 similar pastels, so headings and dashed boundaries remain essential. Tiny
 viewports cannot guarantee a full repeated heading at every horizontal offset.
+
+## One heading per section band (2026-11-07)
+
+The user manually checked the previous section-band outputs and reported that
+they work, but found a heading above every task visually distracting. This is
+user-reported verification of the previous rendering, not a fresh check of this
+revision; no browser version or individual checklist results were supplied.
+
+The revised SVG and HTML render exactly one complete, wrapped, escaped heading
+per contiguous band, 16 pixels inside its left boundary. Recurring sections
+retain separate headings and consistent colours. There are no periodic repeats
+or sticky section headings. Existing header height, task labels, band colours,
+separators, task order, connectors and frozen department geometry are retained.
+
+Verification performed:
+
+- Full suite: **52 tests passed in 11.295 seconds**, exit zero.
+- Regression coverage checks one heading for a long multi-task band, three
+  headings for A, A, B, A, consistent left padding and wrapped bounds, escaping,
+  and the actual synthetic generator producing five headings/four separators
+  in both SVG and HTML.
+- Strict OpenSpec validation: **six items passed, zero failed**.
+- `git diff --check`: passed.
+- The regenerated sample has **36 tasks, 35 connectors, five band headings and
+  four separators**. Its SVG and HTML band groups match. Comparison with the
+  preserved original sample confirmed unchanged task, connector, lane,
+  separator and band-background geometry; the frozen label SVG has no section
+  headings.
+
+New files (previous outputs preserved):
+
+```text
+.qa/section_bands_36_3.xlsx
+output/section_bands_36_3_swimlane.svg
+output/section_bands_36_3_swimlane.html
+```
+
+**Fresh visual check pending.** No new browser verification is claimed. Open
+the new HTML and matching SVG and check:
+
+1. Exactly one heading at each band beginning: Intake 001, review 004, Approval
+   030, Intake 033 and Closeout 035. The long review band has no heading repeats
+   above tasks 005–029; both Intake bands keep their matching colour.
+2. Long/special text wraps completely without clipping, overlap or markup
+   interpretation; all headings have the same padding inside their band.
+3. Tints, dashed transitions, arrows, task section text and first/last tasks stay
+   readable. In HTML, department labels remain neutral, horizontally frozen and
+   vertically aligned while scrolling. Section headings scroll normally.

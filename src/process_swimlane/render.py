@@ -103,9 +103,8 @@ def render_svg(tasks):
                        data_first=tasks[first].task_id, data_last=tasks[end - 1].task_id)
         element(band, "rect", x=left, y=TOP, width=right-left, height=y-TOP,
                 fill=colours[section])
-        for index in range(first, end):
-            heading = element(band, "g", data_kind="section-heading")
-            text_lines(heading, section_lines[section], LEFT + index * stride + 16, TOP + 24)
+        heading = element(band, "g", data_kind="section-heading")
+        text_lines(heading, section_lines[section], left + 16, TOP + 24)
         if first:
             element(band, "line", x1=left, x2=left, y1=TOP, y2=y,
                     stroke="#a5afbc", stroke_width=1, stroke_dasharray="4 6",

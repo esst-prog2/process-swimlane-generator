@@ -2,6 +2,8 @@ from dataclasses import replace
 from html.parser import HTMLParser
 from pathlib import Path
 import re
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
 from xml.etree import ElementTree as ET
@@ -46,6 +48,8 @@ class SectionTests(unittest.TestCase):
         self.assertEqual([(b.get("data-section"), b.get("data-first"), b.get("data-last")) for b in bands],
                          [("A", "1", "2"), ("B", "3", "3"), ("A", "4", "4")])
         self.assertEqual(bands[0][0].get("fill"), bands[2][0].get("fill"))
+        self.assertEqual(len(nodes(root, "section-heading")), 3)
+        self.assertEqual([len(nodes(band, "section-heading")) for band in bands], [1, 1, 1])
         self.assertNotEqual(bands[0][0].get("fill"), bands[1][0].get("fill"))
         self.assertEqual([t.get("data-id") for t in nodes(root, "task")], ["1", "2", "3", "4"])
         # Independent literal positions: 184px left, 352px boxes, 72px gaps.
@@ -60,6 +64,7 @@ class SectionTests(unittest.TestCase):
             with self.subTest(sections=sections):
                 root = ET.fromstring(render_svg(chain(sections)))
                 self.assertEqual(len(nodes(root, "section-band")), expected)
+                self.assertEqual(len(nodes(root, "section-heading")), expected)
                 self.assertEqual(len(nodes(root, "section-separator")), expected-1)
                 self.assertEqual(len(nodes(root, "connection")), len(sections)-1)
                 colours = {}
@@ -68,21 +73,43 @@ class SectionTests(unittest.TestCase):
                     self.assertEqual(colours.setdefault(section, colour), colour)
                 self.assertEqual(len(set(colours.values())), len(colours))
 
-    def test_long_wide_heading_repeats_and_fits(self):
+    def test_long_wide_band_has_one_complete_heading_and_fits(self):
         name = "Long phase <&> " * 30
         root = ET.fromstring(render_svg(chain([name] * 12 + ["Finish"])))
         bands = nodes(root, "section-band")
         headings = nodes(bands[0], "section-heading")
-        self.assertEqual(len(headings), 12)
-        self.assertEqual([float(h[0].get("x")) for h in headings], [200 + i*424 for i in range(12)])
+        self.assertEqual(len(headings), 1)
+        self.assertEqual(float(headings[0][0].get("x")), 200)
         lane_top = float(nodes(root, "lane")[0][0].get("y"))
         for band in bands:
             right = float(band[0].get("x")) + float(band[0].get("width"))
             for heading in nodes(band, "section-heading"):
+                self.assertEqual(float(heading[0].get("x")), float(band[0].get("x")) + 16)
                 self.assertEqual("".join(heading.itertext()), band.get("data-section"))
                 for span in heading[0]:
                     self.assertLess(float(span.get("y")) + 4, lane_top)
                     self.assertLessEqual(float(span.get("x")) + len(span.text or "") * 8, right)
+
+    def test_36_task_sample_has_five_headings_and_four_separators(self):
+        script = Path(__file__).with_name("section_preview.py")
+        with TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, str(script.resolve())], cwd=directory,
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            output = Path(directory) / "output"
+            svg = ET.fromstring((output / "section_bands_36_swimlane.svg").read_bytes())
+            html = (output / "section_bands_36_swimlane.html").read_text(encoding="utf-8")
+        label_svg, diagram = [ET.fromstring(s) for s in re.findall(r"<svg\b.*?</svg>", html, re.S)]
+        self.assertEqual(nodes(label_svg, "section-heading"), [])
+        for root in (svg, diagram):
+            self.assertEqual(len(nodes(root, "task")), 36)
+            self.assertEqual(len(nodes(root, "connection")), 35)
+            self.assertEqual(len(nodes(root, "section-heading")), 5)
+            self.assertEqual(len(nodes(root, "section-separator")), 4)
+            bands = nodes(root, "section-band")
+            self.assertEqual([len(nodes(b, "section-heading")) for b in bands], [1] * 5)
+            self.assertEqual([b.get("data-first") for b in bands], ["001", "004", "030", "033", "035"])
+            self.assertEqual(bands[0][0].get("fill"), bands[3][0].get("fill"))
 
     def test_markup_safe_in_both_formats(self):
         name = '\" onload=\"bad()\"><script>bad()</script>& É漢'

@@ -5,10 +5,10 @@ Column B already identifies workflow phases, but readers must inspect individual
 ## What Changes
 
 - Group consecutive exact section values in validated successor order, without moving tasks; A, A, B, A produces three bands.
-- Add consistent soft section colours, wrapped headings repeated across wide sections, vertical tinting and light dashed transition boundaries in SVG and HTML.
+- Add consistent soft section colours, exactly one wrapped heading near the beginning of each contiguous band with consistent left padding, vertical tinting and light dashed transition boundaries in SVG and HTML. Do not repeat or make section headings sticky.
 - Keep task section text, arrows, department boundaries and the neutral frozen label column readable.
 - Preserve workbook validation, six-column contract, CLI, output numbering and publication behavior; add no dependencies.
-- This proposal describes intended behavior; tests and browser evidence will be recorded separately.
+- The user reports the previous outputs working but requests less heading repetition. The one-heading refinement requires fresh visual verification; tests and visual evidence are recorded separately.
 
 ## Capabilities
 

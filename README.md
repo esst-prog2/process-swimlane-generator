@@ -25,10 +25,11 @@ generator. Excel is used to edit inputs and calculate and save formula results.
 The demo generates a diagram, opens its HTML viewer, and scrolls right while
 department labels remain visible beside their lanes.
 
-The demo also follows soft-coloured workflow section bands, reads repeated
-phase headings while scrolling, and sees dashed boundaries at phase changes.
-Section bands are implemented in both SVG and HTML; automated tests pass,
-while their browser visual acceptance remains pending.
+The demo also follows soft-coloured workflow section bands, reads one wrapped
+phase heading near the beginning of each band, and sees dashed boundaries at
+phase changes. The user reported the previous section-band outputs working but
+requested less heading repetition. The revised one-heading presentation in SVG
+and HTML still needs a fresh visual check.
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
@@ -135,8 +136,10 @@ Sections follow successor order, never worksheet row order; tasks are not
 rearranged to group phases. For example, A, A, B, A makes three bands, with
 both A bands using the same soft colour. Colours are assigned within each
 diagram, not guaranteed across different workbooks. Wrapped headings and dashed
-separators identify phases independently of colour. Headings repeat every task
-slot (424 pixels) across wide bands; long names expand the shared header area.
+separators identify phases independently of colour. Each contiguous band has
+exactly one heading, padded 16 pixels from its left edge; long names wrap and
+expand the shared header area. Headings scroll normally and do not repeat or
+stick to the viewport. A recurring section has its own heading in each run.
 Section text remains inside task boxes. The HTML department column stays neutral
 and uses the same lane positions as the exported SVG.
 
@@ -150,7 +153,7 @@ a 26-task review phase with a long name, and unequal department heights):
 Open the printed HTML path for frozen labels, or the matching SVG for standalone
 viewing. This helper creates a new synthetic workbook under `.qa/` on each run
 and publishes through the normal non-overwriting output logic. See
-[section verification](VERIFICATION.md#section-bands-2026-11-07) for generated
+[section verification](VERIFICATION.md#one-heading-per-section-band-2026-11-07) for generated
 paths and the pending browser checklist.
 
 Errors appear only in the terminal, with row/cell/task context where possible.
