@@ -19,7 +19,13 @@ If Python is not on PATH, use its full executable path for the first command.
 No environment activation, Graphviz, or Excel automation is required to run the
 generator. Excel is used to edit inputs and calculate and save formula results.
 
-## Run the demo
+## The demo
+
+The intended demonstration generates a diagram, opens its HTML viewer, and
+scrolls right while department labels remain visible beside their lanes.
+The viewer is proposed in `openspec/changes/sticky-department-labels/`;
+implementation and verification are tracked there separately. The existing SVG
+demo command below remains available.
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx
