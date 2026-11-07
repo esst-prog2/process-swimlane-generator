@@ -25,6 +25,11 @@ generator. Excel is used to edit inputs and calculate and save formula results.
 The demo generates a diagram, opens its HTML viewer, and scrolls right while
 department labels remain visible beside their lanes.
 
+The next intended demo also follows coloured workflow section bands, reads
+repeated phase headings while scrolling, and sees dashed boundaries at phase
+changes. This is proposed in `openspec/changes/section-bands/`; implementation
+and visual acceptance are tracked separately.
+
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
 ```
