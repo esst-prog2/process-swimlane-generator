@@ -1,8 +1,9 @@
 # Process Swimlane Generator
 
 A Windows Python command-line tool that converts an Excel task table into a
-horizontal department swimlane SVG. The MVP supports one complete linear
-process, including a process with just one task.
+horizontal department swimlane SVG, with an optional offline HTML viewer for
+frozen department labels. The MVP supports one complete linear process,
+including a process with just one task.
 
 ## Install on Windows
 
@@ -21,27 +22,49 @@ generator. Excel is used to edit inputs and calculate and save formula results.
 
 ## The demo
 
-The intended demonstration generates a diagram, opens its HTML viewer, and
-scrolls right while department labels remain visible beside their lanes.
-The viewer is proposed in `openspec/changes/sticky-department-labels/`;
-implementation and verification are tracked there separately. The existing SVG
-demo command below remains available.
+The demo generates a diagram, opens its HTML viewer, and scrolls right while
+department labels remain visible beside their lanes.
+
+```powershell
+.\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
+```
+
+The synthetic example has **12 tasks, four departments, and 11 connections**.
+Success prints both output paths and returns exit code zero. Open the printed
+**HTML** file in Edge or Chrome (double-click it in Windows File Explorer, or
+use **Open with**). On a fresh output directory this is
+`output/purchase_request_swimlane.html`, alongside the SVG of the same name.
+The viewer contains all graphics and styles: no server, network connection,
+external assets, or extra runtime dependencies are needed. Scroll horizontally
+through tasks and vertically through departments. Long labels wrap; the diagram
+is not limited to one printed page. Focus the diagram to scroll with arrow keys.
+
+The viewer is implemented and automated regression tests pass. **Actual browser
+scrolling and File Explorer opening have not yet been visually verified** because
+browser automation was blocked. See [verification and manual checks](VERIFICATION.md#frozen-department-viewer-2026-11-07)
+for the evidence and remaining visual acceptance checks.
+
+Omit `--viewer` for the compatible SVG-only command:
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx
 ```
 
-The synthetic example has **12 tasks, four departments, and 11 connections**.
-Success prints the output path and returns exit code zero. Open
-`output/purchase_request_swimlane.svg` in Edge or another browser. At native
-scale, scroll horizontally through the process. Long labels wrap inside task
-boxes; the diagram is not limited to one printed page.
+Open that `.svg` for the standalone export; frozen labels are an HTML viewer
+feature.
 
-Run again to create `purchase_request_swimlane_2.svg`, then `_3.svg`, and so on.
-The first available filename is used. The `output/` directory is relative to
-the directory from which you run the command. Existing diagrams are never
-overwritten. Validation and rendering finish before publication; failed runs
-preserve previous diagrams.
+Repeated viewer runs use matching `_2.svg` / `_2.html`, then `_3.svg` / `_3.html`,
+and so on. The first suffix free in **both formats** is used; an existing SVG or
+HTML reserves that suffix for paired generation. SVG-only runs retain their
+original SVG-only numbering. The `output/` directory is relative to the directory
+from which you run the command. Existing files are never overwritten.
+
+Validation and both renders finish before publication. Handled publication
+failures remove newly created members and preserve previous files. If Windows
+also denies cleanup, the error identifies leftover files for manual removal.
+Two separate files are not a crash-atomic transaction: forced termination or
+power loss between publications can leave one member; only terminal success
+confirms that the pair was completed.
 
 ## Prepare your workbook
 
