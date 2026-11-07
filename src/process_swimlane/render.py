@@ -47,8 +47,25 @@ def text_lines(parent, lines, x, y, fill="#172b4d", size=13):
         element(text, "tspan", x=x, y=y + index * LINE_HEIGHT).text = line
 
 
+def section_runs(tasks):
+    """Return half-open runs in validated sequence order, never regroup tasks."""
+    runs = []
+    start = 0
+    for end in range(1, len(tasks) + 1):
+        if end == len(tasks) or tasks[end].section != tasks[start].section:
+            runs.append((tasks[start].section, start, end))
+            start = end
+    return runs
+
+
 def render_svg(tasks):
     departments = list(dict.fromkeys(task.department for task in tasks))
+    runs = section_runs(tasks)
+    sections = list(dict.fromkeys(section for section, _, _ in runs))
+    section_lines = {section: wrap(section) for section in sections}
+    colours = {section: f"hsl({index * 137.508 % 360:.3f}, 55%, 94%)"
+               for index, section in enumerate(sections)}
+    lane_top = TOP + max(len(lines) for lines in section_lines.values()) * LINE_HEIGHT + 24
     task_lines = [labels(task) for task in tasks]
     heights = [max(100, len(lines) * LINE_HEIGHT + 32) for lines in task_lines]
     lane_heights = {
@@ -57,7 +74,7 @@ def render_svg(tasks):
             len(wrap(department, 16)) * LINE_HEIGHT + 48,
         ) for department in departments
     }
-    lane_y, y = {}, TOP
+    lane_y, y = {}, lane_top
     for department in departments:
         lane_y[department] = y
         y += lane_heights[department]
@@ -76,6 +93,28 @@ def render_svg(tasks):
         start, height = lane_y[department], lane_heights[department]
         element(group, "rect", x=16, y=start, width=width-32, height=height, fill="#f0f5fa" if index % 2 == 0 else "#f8fafc", stroke="#dbe3ec")
         text_lines(group, wrap(department, 16), 30, start + 35, fill="#304761")
+    # Keep section layers separate from lane groups copied into frozen labels.
+    # All coordinates originate here; the HTML viewer retains these SVG groups.
+    stride = BOX_WIDTH + GAP
+    for section, first, end in runs:
+        left = LEFT if first == 0 else LEFT + first * stride - GAP / 2
+        right = width - 16 if end == len(tasks) else LEFT + end * stride - GAP / 2
+        band = element(root, "g", data_kind="section-band", data_section=section,
+                       data_first=tasks[first].task_id, data_last=tasks[end - 1].task_id)
+        element(band, "rect", x=left, y=TOP, width=right-left, height=y-TOP,
+                fill=colours[section])
+        for index in range(first, end):
+            heading = element(band, "g", data_kind="section-heading")
+            text_lines(heading, section_lines[section], LEFT + index * stride + 16, TOP + 24)
+        if first:
+            element(band, "line", x1=left, x2=left, y1=TOP, y2=y,
+                    stroke="#a5afbc", stroke_width=1, stroke_dasharray="4 6",
+                    data_kind="section-separator")
+    # Opaque pastel tints cover the task half of lane fills, so restore boundaries.
+    boundaries = element(root, "g", data_kind="lane-boundaries")
+    for boundary in [*lane_y.values(), y]:
+        element(boundaries, "line", x1=LEFT, x2=width-16, y1=boundary, y2=boundary,
+                stroke="#c4cedb", stroke_width=1)
     positions = []
     for index, (task, height) in enumerate(zip(tasks, heights)):
         x = LEFT + index * (BOX_WIDTH + GAP)
