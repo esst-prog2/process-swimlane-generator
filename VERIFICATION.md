@@ -282,8 +282,9 @@ output/section_bands_36_3_swimlane.svg
 output/section_bands_36_3_swimlane.html
 ```
 
-**Fresh visual check pending.** No new browser verification is claimed. Open
-the new HTML and matching SVG and check:
+The fresh check was pending at refinement delivery; the user's subsequent
+acceptance below supersedes that status for the three explicitly confirmed
+behaviors. No automated browser verification is claimed. Original checklist:
 
 1. Exactly one heading at each band beginning: Intake 001, review 004, Approval
    030, Intake 033 and Closeout 035. The long review band has no heading repeats
@@ -293,3 +294,32 @@ the new HTML and matching SVG and check:
 3. Tints, dashed transitions, arrows, task section text and first/last tasks stay
    readable. In HTML, department labels remain neutral, horizontally frozen and
    vertically aligned while scrolling. Section headings scroll normally.
+
+## Homework 7 and Homework 8 final acceptance
+
+On 2026-11-07 the user reports manually inspecting the latest example and
+confirms frozen department labels in HTML, section colours and dashed
+separators, and exactly one heading per contiguous section band. Those specific
+checks are accepted, including the heading refinement in `3cd6727`. No browser
+version, viewport, zoom, screenshot capture or automated browser result is
+inferred. The user referred to the latest example without supplying a filename;
+the latest generated pair recorded above is `section_bands_36_3_swimlane.svg`
+and `.html`, but that is not independent evidence of which file was inspected.
+
+The final README demo uses screenshots for presentation and the named synthetic
+workbook `.qa/section_bands_36.xlsx`. A read-only workbook inspection confirmed
+36 tasks, four exact departments, five contiguous section runs, 35 successor
+connections, start 001 and end 036. `examples/invalid_loop.xlsx` exists. No count
+or filename correction was needed. `tests/section_preview.py` recreates the
+data from source, selecting the base name when absent or the next numbered name
+when occupied, and invokes normal paired generation. Generated inputs and
+outputs remain ignored and prior files are preserved.
+
+This finalization changes documentation only. The latest relevant test evidence
+remains **52 tests passed in 11.295 seconds** for the heading refinement; the
+suite was not rerun. Prior installed-CLI acceptance verified loop rejection and
+output preservation. Final strict OpenSpec validation and `git diff --check`
+passed. Automated browser verification remains unperformed; individual checks
+not explicitly confirmed (such as opening a copied HTML alone, File Explorer
+association, font fallback, or forced-termination recovery) are not newly marked
+passed. No Canvas submission is part of this work.

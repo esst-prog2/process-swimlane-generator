@@ -14,6 +14,9 @@
 - [x] 3.1 Verify one heading for a long multi-task band and each recurring run, and five heading groups plus four separators in the 36-task sample, in SVG and HTML.
 - [x] 3.2 Run full tests, strict OpenSpec validation and git diff --check; regenerate the synthetic sample, record exact paths and fresh visual-check status, and commit the refinement separately.
 
-The user reports the prior section-band outputs working but requests less
-heading repetition. Revised one-heading rendering still needs a fresh visual
-check; previous manual verification does not cover this refinement.
+- [x] 3.3 Record latest user-reported manual acceptance of one heading per contiguous band, section colours and dashed separators, and frozen viewer labels; finalize the five-sentence screenshot-presentation demo with verified sample counts.
+
+The user manually accepts the latest one-heading rendering, colours, dashed
+separators and frozen labels. This supersedes pending status for those specific
+checks only. Automated browser verification and unrelated unperformed checks
+remain distinct; see VERIFICATION.md for provenance.

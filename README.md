@@ -22,14 +22,34 @@ generator. Excel is used to edit inputs and calculate and save formula results.
 
 ## The demo
 
-The demo generates a diagram, opens its HTML viewer, and scrolls right while
-department labels remain visible beside their lanes.
+I show the synthetic Excel workbook `.qa/section_bands_36.xlsx`, containing 36 tasks across four departments and five consecutive section bands. I run Process Swimlane Generator with `--viewer`, which creates a standalone SVG and a self-contained HTML viewer. In Chrome, I follow the workflow from task 001 to task 036 along 35 directed connections. As I scroll horizontally, department labels remain visible on the left, while soft colours, one heading per section band, and dashed boundaries distinguish the workflow phases. Finally, I run `examples/invalid_loop.xlsx` and show the terminal diagnostic rejecting the invalid workflow without creating a new diagram.
 
-The demo also follows soft-coloured workflow section bands, reads one wrapped
-phase heading near the beginning of each band, and sees dashed boundaries at
-phase changes. The user reported the previous section-band outputs working but
-requested less heading repetition. The revised one-heading presentation in SVG
-and HTML still needs a fresh visual check.
+## Usage and presentation
+
+The Homework 7 and Homework 8 presentation uses screenshots of the workbook,
+viewer and terminal diagnostic. The demo paragraph describes the demonstrated
+workflow; it is not evidence of automated Chrome verification.
+
+```powershell
+.\.venv\Scripts\python.exe tests/section_preview.py
+.\.venv\Scripts\process-map.exe .qa/section_bands_36.xlsx --viewer
+.\.venv\Scripts\process-map.exe examples/invalid_loop.xlsx
+```
+
+`tests/section_preview.py` recreates the synthetic data from source, including
+reversed worksheet rows, and generates an SVG/HTML pair. On a fresh checkout it
+creates `.qa/section_bands_36.xlsx`. If that file exists, it preserves it and
+chooses `_2`, `_3`, and so on; use the printed workbook path for that new sample.
+The base filename used in the demo exists locally and its counts were checked.
+Generated workbooks and outputs are ignored by Git. Open the printed HTML path;
+older numbered outputs remain unchanged.
+
+The user manually accepted frozen department labels, section colours and dashed
+separators, and one heading per contiguous band in the latest example. This is
+user-reported acceptance; browser version, viewport and zoom were not supplied.
+See [final acceptance evidence](VERIFICATION.md#homework-7-and-homework-8-final-acceptance).
+
+The smaller original template remains available:
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
@@ -154,7 +174,8 @@ Open the printed HTML path for frozen labels, or the matching SVG for standalone
 viewing. This helper creates a new synthetic workbook under `.qa/` on each run
 and publishes through the normal non-overwriting output logic. See
 [section verification](VERIFICATION.md#one-heading-per-section-band-2026-11-07) for generated
-paths and the pending browser checklist.
+paths and the verification history. The three specific visual behaviors above
+are now accepted by the user; automated browser verification remains unperformed.
 
 Errors appear only in the terminal, with row/cell/task context where possible.
 Invalid input returns a nonzero exit code and creates no new SVG. Try:

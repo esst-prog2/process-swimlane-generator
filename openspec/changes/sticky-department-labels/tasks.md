@@ -9,6 +9,8 @@
 - [x] 2.2 Generate a synthetic 45-task process with several departments, unequal lane heights and a long name; attempt available browser verification at left/middle/right and vertical scroll, recording evidence or tooling limitations and exact manual steps.
 - [x] 2.3 Update usage and verification evidence, record planning decisions, run git diff --check and commit implementation and verification separately without private inputs, push, merge or branch deletion.
 
-Browser visual acceptance remains pending: task 2.2 completed the permitted
-tooling-limitation/manual-procedure path, not successful browser verification.
-See VERIFICATION.md, Frozen department viewer (2026-11-07).
+- [x] 2.4 Record the user's latest manual acceptance of frozen department labels in the combined example; retain the distinction from automated browser verification and unrelated unperformed checks.
+
+Frozen department labels are user-accepted in the latest example. Task 2.2 used
+the tooling-limitation path; automated browser verification remains unperformed.
+See VERIFICATION.md, Homework 7 and Homework 8 final acceptance.
