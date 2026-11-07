@@ -154,3 +154,90 @@ the pending overall viewer status recorded above. The user did not provide a
 browser version, tested filename, viewport, or individual checklist results;
 none are inferred here. Automated browser verification remains blocked as
 recorded above. This report does not verify the forthcoming section bands.
+
+## Section bands (2026-11-07)
+
+Branch `feature/section-bands` starts from the viewer branch at `ef8c72b`, which
+records user-reported manual viewer verification. Section proposal: `a1a8948`;
+implementation: `497275b`. This feature uses the existing column B and adds no
+runtime dependencies. The viewer retains the section geometry emitted by the
+SVG renderer; workbook validation, CLI and publication code were not changed.
+
+### Actual checks
+
+- Full unittest suite: **51 tests passed in 10.825 seconds**, exit zero.
+  Six new tests cover reversed workbook rows resolving to A, A, B, A; separate
+  recurring runs with consistent colours; exact case/space identity; single-task,
+  single-section and every-task-transition cases; wrapped repeated long headings;
+  markup safety; unchanged task positions and connector paths when only grouping
+  changes; background drawing order; and viewer section geometry with neutral
+  label groups and unequal lane heights. Existing independent arrow-endpoint,
+  workbook, viewer and publication regression checks also passed.
+- Installed CLI acceptance (`tests/acceptance.py`) passed: two new SVGs (`_7` and
+  `_8`), correct 12-task/four-lane/11-arrow structure, invalid input diagnostics,
+  and preservation of inputs and all prior outputs.
+- `openspec validate --all --strict`: **six items passed, zero failed**.
+- `git diff --check`: passed.
+- Generated sample inspected structurally: **36 tasks, 35 connectors, five
+  bands, 36 heading instances and four dashed separators**, 15,448 by 1,556
+  pixels. Section groups match exactly between SVG and HTML; frozen labels
+  contain no section groups. Lane (origin, height) values are Requesting
+  (164, 180), Procurement & supplier quality coordination (344, 660), Finance
+  (1004, 340), and Receiving (1344, 180).
+
+### Generated synthetic sample
+
+```text
+.qa/section_bands_36.xlsx
+output/section_bands_36_swimlane.svg
+output/section_bands_36_swimlane.html
+```
+
+The workbook rows are deliberately reversed. Successor order produces:
+
+| Band | Tasks | Section |
+| --- | --- | --- |
+| 1 | 001–003 | Intake |
+| 2 | 004–029 | `Detailed review & supplier coordination <quality assurance phase>` |
+| 3 | 030–032 | Approval |
+| 4 | 033–034 | Intake (same colour as band 1) |
+| 5 | 035–036 | Closeout |
+
+Reproduce with the command below. Each run selects a fresh synthetic workbook
+filename and prints the exact new output paths:
+
+```powershell
+.\.venv\Scripts\python.exe tests/section_preview.py
+```
+
+Generated workbooks and outputs remain ignored; only the synthetic generation
+script is committed. No confidential workplace workbook was read or used.
+
+### Browser status and short manual checklist
+
+Browser discovery during this change again returned **“The browser access host
+is unavailable.”** No browser tabs were available. No new browser navigation or
+screenshot verification was performed; the earlier native-browser policy stop
+was not bypassed. **Section visual acceptance remains pending.** The prior
+user-reported viewer verification does not establish correctness of these new
+colours, headings, boundaries or the expanded header.
+
+1. Open `output/section_bands_36_swimlane.html` directly in Edge or Chrome at
+   100% zoom in an approximately 1200-by-800 window. At the left, check task 001,
+   Intake heading, soft tint, readable arrows and neutral department labels.
+2. Scroll to the middle of tasks 004–029: confirm the full review heading repeats
+   and wraps above the lanes without overlap, and its `<quality assurance phase>`
+   text is displayed literally. Check the tall Procurement lane and its boundary.
+3. Scroll fully right: check the Approval, recurring Intake and Closeout bands,
+   consistent Intake colour, dashed boundaries only at section changes, and
+   complete access to task 036 and its incoming arrow.
+4. At left, middle and right, scroll vertically: department labels must remain
+   fixed horizontally and aligned vertically with the tinted lane boundaries.
+   Return to the top to see section headings; they are not vertically sticky.
+5. Open the matching SVG and repeat the phase/readability checks. Record browser
+   version, tested filename, zoom and pass/fail observations before marking
+   section visual acceptance passed.
+
+Very long section names increase header height. Many distinct sections can have
+similar pastels, so headings and dashed boundaries remain essential. Tiny
+viewports cannot guarantee a full repeated heading at every horizontal offset.

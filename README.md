@@ -25,10 +25,10 @@ generator. Excel is used to edit inputs and calculate and save formula results.
 The demo generates a diagram, opens its HTML viewer, and scrolls right while
 department labels remain visible beside their lanes.
 
-The next intended demo also follows coloured workflow section bands, reads
-repeated phase headings while scrolling, and sees dashed boundaries at phase
-changes. This is proposed in `openspec/changes/section-bands/`; implementation
-and visual acceptance are tracked separately.
+The demo also follows soft-coloured workflow section bands, reads repeated
+phase headings while scrolling, and sees dashed boundaries at phase changes.
+Section bands are implemented in both SVG and HTML; automated tests pass,
+while their browser visual acceptance remains pending.
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
@@ -97,6 +97,9 @@ as Text does not recover leading zeros: re-enter the original identifier.
 Numeric IDs are rejected even if Excel displays 1 as `001`. Matching is exact,
 including case and surrounding spaces; no trimming or conversion occurs.
 Department labels are exact too, so use consistent spelling.
+Section values are also exact: case and surrounding spaces distinguish phases.
+The existing column B supplies both task text and section bands; no extra
+column or workbook migration is needed.
 
 Frequency accepts Excel numbers or dot-decimal text such as `0.5`. Localized
 Excel number display does not change the stored numeric value. Blank means not
@@ -126,6 +129,29 @@ tasks are not.
 
 Department lanes follow first appearance in the linked sequence. Every task
 shows its ID, description, section, and frequency when provided.
+
+Consecutive tasks with exactly the same section share a background band.
+Sections follow successor order, never worksheet row order; tasks are not
+rearranged to group phases. For example, A, A, B, A makes three bands, with
+both A bands using the same soft colour. Colours are assigned within each
+diagram, not guaranteed across different workbooks. Wrapped headings and dashed
+separators identify phases independently of colour. Headings repeat every task
+slot (424 pixels) across wide bands; long names expand the shared header area.
+Section text remains inside task boxes. The HTML department column stays neutral
+and uses the same lane positions as the exported SVG.
+
+To generate the richer synthetic section demo (36 tasks, recurring Intake,
+a 26-task review phase with a long name, and unequal department heights):
+
+```powershell
+.\.venv\Scripts\python.exe tests/section_preview.py
+```
+
+Open the printed HTML path for frozen labels, or the matching SVG for standalone
+viewing. This helper creates a new synthetic workbook under `.qa/` on each run
+and publishes through the normal non-overwriting output logic. See
+[section verification](VERIFICATION.md#section-bands-2026-11-07) for generated
+paths and the pending browser checklist.
 
 Errors appear only in the terminal, with row/cell/task context where possible.
 Invalid input returns a nonzero exit code and creates no new SVG. Try:

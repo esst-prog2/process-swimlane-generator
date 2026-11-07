@@ -6,5 +6,10 @@
 ## 2. Verification and delivery
 
 - [x] 2.1 Generate a synthetic multi-section example with a wide long-name section, recurrence and unequal lanes; verify both output files and record their paths.
-- [ ] 2.2 Run all tests, strict OpenSpec validation and git diff --check; record actual outcomes, attempt available browser verification or document limitation and short manual checklist with visual acceptance pending.
-- [ ] 2.3 Update usage/demo, append decisions and evidence, and commit implementation and verification in logical stages; verify clean Git status without push, merge or branch deletion.
+- [x] 2.2 Run all tests, strict OpenSpec validation and git diff --check; record actual outcomes, attempt available browser verification or document limitation and short manual checklist with visual acceptance pending.
+- [x] 2.3 Update usage/demo, append decisions and evidence, and commit implementation and verification in logical stages; verify clean Git status without push, merge or branch deletion.
+
+Visual acceptance remains pending. Task 2.2 used its explicit unavailable-browser
+path: browser host unavailable, structural checks passed, and exact sample paths
+plus manual checks recorded in VERIFICATION.md. The earlier user-reported viewer
+verification does not verify the new section bands.
