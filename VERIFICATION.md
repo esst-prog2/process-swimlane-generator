@@ -145,3 +145,12 @@ failure handling were tested on the actual Windows runtime.
 Handled pair failures are rolled back; cleanup denial is reported with paths.
 Forced process termination or power loss between two renames is not crash-atomic
 and has not been fault-injected. No private `spike_workbooks/` input was used.
+
+### User-reported manual verification follow-up (2026-11-07)
+
+The section-grouping request identifies the frozen viewer work as manually
+verified. This is user-reported verification of the existing viewer, superseding
+the pending overall viewer status recorded above. The user did not provide a
+browser version, tested filename, viewport, or individual checklist results;
+none are inferred here. Automated browser verification remains blocked as
+recorded above. This report does not verify the forthcoming section bands.

@@ -39,10 +39,10 @@ external assets, or extra runtime dependencies are needed. Scroll horizontally
 through tasks and vertically through departments. Long labels wrap; the diagram
 is not limited to one printed page. Focus the diagram to scroll with arrow keys.
 
-The viewer is implemented and automated regression tests pass. **Actual browser
-scrolling and File Explorer opening have not yet been visually verified** because
-browser automation was blocked. See [verification and manual checks](VERIFICATION.md#frozen-department-viewer-2026-11-07)
-for the evidence and remaining visual acceptance checks.
+The viewer is implemented and automated regression tests pass. The user reports
+the frozen viewer as manually verified in the section-grouping follow-up request.
+Automated browser verification was blocked; browser/version and individual check
+results were not supplied. See [verification provenance](VERIFICATION.md#frozen-department-viewer-2026-11-07).
 
 Omit `--viewer` for the compatible SVG-only command:
 
