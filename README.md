@@ -1,8 +1,9 @@
 # Process Swimlane Generator
 
 A Windows Python command-line tool that converts an Excel task table into a
-horizontal department swimlane SVG. The MVP supports one complete linear
-process, including a process with just one task.
+horizontal department swimlane SVG, with an optional offline HTML viewer for
+frozen department labels. The MVP supports one complete linear process,
+including a process with just one task.
 
 ## Install on Windows
 
@@ -19,23 +20,77 @@ If Python is not on PATH, use its full executable path for the first command.
 No environment activation, Graphviz, or Excel automation is required to run the
 generator. Excel is used to edit inputs and calculate and save formula results.
 
-## Run the demo
+## The demo
+
+I show the synthetic Excel workbook `.qa/section_bands_36.xlsx`, containing 36 tasks across four departments and five consecutive section bands. I run Process Swimlane Generator with `--viewer`, which creates a standalone SVG and a self-contained HTML viewer. In Chrome, I follow the workflow from task 001 to task 036 along 35 directed connections. As I scroll horizontally, department labels remain visible on the left, while soft colours, one heading per section band, and dashed boundaries distinguish the workflow phases. Finally, I run `examples/invalid_loop.xlsx` and show the terminal diagnostic rejecting the invalid workflow without creating a new diagram.
+
+## Usage and presentation
+
+The Homework 7 and Homework 8 presentation uses screenshots of the workbook,
+viewer and terminal diagnostic. The demo paragraph describes the demonstrated
+workflow; it is not evidence of automated Chrome verification.
+
+```powershell
+.\.venv\Scripts\python.exe tests/section_preview.py
+.\.venv\Scripts\process-map.exe .qa/section_bands_36.xlsx --viewer
+.\.venv\Scripts\process-map.exe examples/invalid_loop.xlsx
+```
+
+`tests/section_preview.py` recreates the synthetic data from source, including
+reversed worksheet rows, and generates an SVG/HTML pair. On a fresh checkout it
+creates `.qa/section_bands_36.xlsx`. If that file exists, it preserves it and
+chooses `_2`, `_3`, and so on; use the printed workbook path for that new sample.
+The base filename used in the demo exists locally and its counts were checked.
+Generated workbooks and outputs are ignored by Git. Open the printed HTML path;
+older numbered outputs remain unchanged.
+
+The user manually accepted frozen department labels, section colours and dashed
+separators, and one heading per contiguous band in the latest example. This is
+user-reported acceptance; browser version, viewport and zoom were not supplied.
+See [final acceptance evidence](VERIFICATION.md#homework-7-and-homework-8-final-acceptance).
+
+The smaller original template remains available:
+
+```powershell
+.\.venv\Scripts\process-map.exe examples/purchase_request.xlsx --viewer
+```
+
+The synthetic example has **12 tasks, four departments, and 11 connections**.
+Success prints both output paths and returns exit code zero. Open the printed
+**HTML** file in Edge or Chrome (double-click it in Windows File Explorer, or
+use **Open with**). On a fresh output directory this is
+`output/purchase_request_swimlane.html`, alongside the SVG of the same name.
+The viewer contains all graphics and styles: no server, network connection,
+external assets, or extra runtime dependencies are needed. Scroll horizontally
+through tasks and vertically through departments. Long labels wrap; the diagram
+is not limited to one printed page. Focus the diagram to scroll with arrow keys.
+
+The viewer is implemented and automated regression tests pass. The user reports
+the frozen viewer as manually verified in the section-grouping follow-up request.
+Automated browser verification was blocked; browser/version and individual check
+results were not supplied. See [verification provenance](VERIFICATION.md#frozen-department-viewer-2026-11-07).
+
+Omit `--viewer` for the compatible SVG-only command:
 
 ```powershell
 .\.venv\Scripts\process-map.exe examples/purchase_request.xlsx
 ```
 
-The synthetic example has **12 tasks, four departments, and 11 connections**.
-Success prints the output path and returns exit code zero. Open
-`output/purchase_request_swimlane.svg` in Edge or another browser. At native
-scale, scroll horizontally through the process. Long labels wrap inside task
-boxes; the diagram is not limited to one printed page.
+Open that `.svg` for the standalone export; frozen labels are an HTML viewer
+feature.
 
-Run again to create `purchase_request_swimlane_2.svg`, then `_3.svg`, and so on.
-The first available filename is used. The `output/` directory is relative to
-the directory from which you run the command. Existing diagrams are never
-overwritten. Validation and rendering finish before publication; failed runs
-preserve previous diagrams.
+Repeated viewer runs use matching `_2.svg` / `_2.html`, then `_3.svg` / `_3.html`,
+and so on. The first suffix free in **both formats** is used; an existing SVG or
+HTML reserves that suffix for paired generation. SVG-only runs retain their
+original SVG-only numbering. The `output/` directory is relative to the directory
+from which you run the command. Existing files are never overwritten.
+
+Validation and both renders finish before publication. Handled publication
+failures remove newly created members and preserve previous files. If Windows
+also denies cleanup, the error identifies leftover files for manual removal.
+Two separate files are not a crash-atomic transaction: forced termination or
+power loss between publications can leave one member; only terminal success
+confirms that the pair was completed.
 
 ## Prepare your workbook
 
@@ -63,6 +118,9 @@ as Text does not recover leading zeros: re-enter the original identifier.
 Numeric IDs are rejected even if Excel displays 1 as `001`. Matching is exact,
 including case and surrounding spaces; no trimming or conversion occurs.
 Department labels are exact too, so use consistent spelling.
+Section values are also exact: case and surrounding spaces distinguish phases.
+The existing column B supplies both task text and section bands; no extra
+column or workbook migration is needed.
 
 Frequency accepts Excel numbers or dot-decimal text such as `0.5`. Localized
 Excel number display does not change the stored numeric value. Blank means not
@@ -92,6 +150,32 @@ tasks are not.
 
 Department lanes follow first appearance in the linked sequence. Every task
 shows its ID, description, section, and frequency when provided.
+
+Consecutive tasks with exactly the same section share a background band.
+Sections follow successor order, never worksheet row order; tasks are not
+rearranged to group phases. For example, A, A, B, A makes three bands, with
+both A bands using the same soft colour. Colours are assigned within each
+diagram, not guaranteed across different workbooks. Wrapped headings and dashed
+separators identify phases independently of colour. Each contiguous band has
+exactly one heading, padded 16 pixels from its left edge; long names wrap and
+expand the shared header area. Headings scroll normally and do not repeat or
+stick to the viewport. A recurring section has its own heading in each run.
+Section text remains inside task boxes. The HTML department column stays neutral
+and uses the same lane positions as the exported SVG.
+
+To generate the richer synthetic section demo (36 tasks, recurring Intake,
+a 26-task review phase with a long name, and unequal department heights):
+
+```powershell
+.\.venv\Scripts\python.exe tests/section_preview.py
+```
+
+Open the printed HTML path for frozen labels, or the matching SVG for standalone
+viewing. This helper creates a new synthetic workbook under `.qa/` on each run
+and publishes through the normal non-overwriting output logic. See
+[section verification](VERIFICATION.md#one-heading-per-section-band-2026-11-07) for generated
+paths and the verification history. The three specific visual behaviors above
+are now accepted by the user; automated browser verification remains unperformed.
 
 Errors appear only in the terminal, with row/cell/task context where possible.
 Invalid input returns a nonzero exit code and creates no new SVG. Try:
