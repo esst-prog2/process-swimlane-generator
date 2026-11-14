@@ -323,3 +323,48 @@ passed. Automated browser verification remains unperformed; individual checks
 not explicitly confirmed (such as opening a copied HTML alone, File Explorer
 association, font fallback, or forced-termination recovery) are not newly marked
 passed. No Canvas submission is part of this work.
+
+## HW9 fresh-clone reproduction — 2026-11-14
+
+GitHub main was updated without force from 4187f4e to merge commit
+89e4083e79cc3a27d64614727b1fd01d94bf7f9a. No PR was required.
+The single --no-ff merge of feature/section-bands includes the frozen viewer
+(branch tip ef8c72b), section bands, HW9 setup 936ebb4 and inspection fdf62a1.
+The unrelated untracked .Rhistory in the original checkout was preserved.
+Remote main was independently confirmed with git ls-remote before cloning.
+
+Fresh Windows clone (no local files copied):
+`C:\Users\User\AppData\Local\Temp\hw9-fresh-20261114-89e4083`
+
+Cloned origin main at 89e4083; initial and post-demo git status were clean.
+The Python launcher and python command were unavailable on PATH, so the README's
+full-path fallback was used: `C:\Users\User\AppData\Local\Programs\Python\Python313\python.exe`.
+It reported Python 3.13.0. Creating `.venv` and running
+`.\.venv\Scripts\python.exe -m pip install .` succeeded (exit 0), installing
+process-swimlane-generator 0.1.0, openpyxl 3.1.5 and et-xmlfile 2.0.0.
+`.\.venv\Scripts\process-map.exe --help` displayed the --viewer option.
+
+`.\.venv\Scripts\python.exe tests\section_preview.py` exited 0, recreated
+`.qa\section_bands_36.xlsx`, validated 36 tasks and generated:
+
+- `output\section_bands_36_swimlane.svg` (36,293 bytes)
+- `output\section_bands_36_swimlane.html` (37,963 bytes)
+
+`.\.venv\Scripts\process-map.exe examples\invalid_loop.xlsx` exited 1:
+
+```text
+Error: could not validate process: Process: Not a valid linear workflow: expected one start and one end; found 0 starts and 0 ends (possible loop or disconnected chains).
+```
+
+Before/after output file paths and SHA-256 hashes were identical: no output
+created or modified by the invalid-loop run. Only the demo SVG and HTML existed.
+No full automated regression suite was rerun for this reproduction.
+
+Chrome launch was requested successfully using its installed executable and
+the fresh clone's HTML file URL. This is launch evidence, not visual acceptance.
+On 2026-11-14, the user reported checking the Chrome example: frozen department
+labels work, sections are clearly separated, and the example looks good.
+The manual visual check passed for those explicitly reported behaviors.
+This is user-reported acceptance of the fresh-clone demo, not automated browser
+verification. Exact heading counts, individual arrow checks, browser version,
+viewport and zoom were not separately reported.
