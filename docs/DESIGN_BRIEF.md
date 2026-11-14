@@ -29,3 +29,7 @@ Serve two local previews and pause for selection before finalizing the design.
 Tools: Codex shell and file editing; Sites skill local-preview guidance.
 No gstack-office-hours or Impeccable tools/skills were found in the session
 catalog or inspected local skill folders; proceed with the user's Codex fallback.
+
+Final selection (2026-11-14): the user chose A because it is professional and easy to read. Paper is now the final index.html; the comparison alternative is removed. Assistant review prioritizes clearer input/setup expectations and diagram navigation; added a three-step explanation and Python/command-line setup note beside the links.
+
+Final manual checks (2026-11-14): user reports the sample opens appropriately and the Windows link displays GitHub code and instructions. Phone-width view is too large and unsuitable; mobile usability remains a known limitation, not a passed check. User requested final commit and push with this result recorded.
