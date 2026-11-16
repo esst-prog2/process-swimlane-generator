@@ -10,8 +10,8 @@
 <header class="top"><span class="brand">Process Swimlane Generator</span><span class="edition">EXCEL → SWIMLANES</span></header>
 <main>
 <section class="hero" aria-labelledby="headline"><div class="intro">
-<p class="eyebrow">For people who document processes in Excel</p>
-<h1 id="headline">See who does what,<br><span>from an Excel task list.</span></h1>
+<h1 id="headline">See who does what, <span>from an Excel task list.</span></h1>
+<p class="audience">For people who document processes in Excel</p>
 <p class="lead">Turn a linear workflow into a diagram that shows each step, the department responsible, and what happens next. Generate an SVG and an offline HTML viewer locally on Windows.</p>
 <nav class="actions" aria-label="Get started"><a class="button primary" href="#purchase-example">Follow a purchase request ↓</a><a class="button" href="https://github.com/esst-prog2/process-swimlane-generator#install-on-windows">Set up on Windows ↗</a></nav>
 <p class="setup-note">Setup requires Python 3.13+ and PowerShell. The setup link opens the installation instructions.</p>
@@ -21,19 +21,15 @@
 <p class="lead">Follow a fictional purchase request through Requesting, Purchasing, Finance and Receiving. See where responsibility changes hands.</p>
 <p class="example-meta">12 steps · 4 departments · Invented example data</p>
 <div class="before-after">
-<article><h3>Start with rows in Excel</h3><p>The first three tasks from the included workbook, with selected columns shown.</p>
+<article class="handoff-guide"><h3>Follow the handoff</h3><p>The same three steps, grouped by who does the work. This is a simplified reading guide to the full diagram below.</p><div class="transfer-sheet"><section class="request-block"><h4>Requesting</h4><ol class="handoff"><li><strong>001 &#183; Identify the required supplies</strong></li><li><strong>002 &#183; Describe quantities and purpose</strong></li></ol></section><div class="transfer-bridge"><svg aria-hidden="true" viewBox="0 0 80 56" width="80" height="56" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 0v24h56v25m-7-7 7 7 7-7"/></svg><span>002 ? 003 &#183; Requesting to Purchasing</span></div><section class="purchase-block"><h4>Purchasing</h4><ol class="handoff" start="3"><li><strong>003 &#183; Check the request is complete</strong></li></ol></section></div></article>
+<article class="workbook-excerpt"><h3>Start with rows in Excel</h3><p>The first three tasks from the included workbook, with selected columns shown.</p>
 <table><caption class="visually-hidden">Purchase-request workbook excerpt</caption><thead><tr><th scope="col">ID</th><th scope="col">Task</th><th scope="col">Department</th></tr></thead><tbody>
 <tr><td>001</td><td>Identify the required supplies</td><td>Requesting</td></tr>
 <tr><td>002</td><td>Describe quantities and purpose</td><td>Requesting</td></tr>
 <tr><td>003</td><td>Check the request is complete</td><td>Purchasing</td></tr>
 </tbody></table><a href="purchase_request.xlsx" download>Download the example workbook ↓</a></article>
-<article><h3>Follow the handoff</h3><p>The same three steps, grouped by who does the work. This is a simplified reading guide to the full diagram below.</p>
-<ol class="handoff">
-<li><span class="department">Requesting</span><strong>001 · Identify the required supplies</strong></li>
-<li><span class="department">Requesting</span><strong>002 · Describe quantities and purpose</strong></li>
-<li><span class="department">Purchasing</span><strong>003 · Check the request is complete</strong></li>
-</ol></article></div>
-<figure><div class="window"><div class="bar"><span>PURCHASE REQUEST / FULL HTML VIEWER</span><span>12 steps · 4 departments</span></div><iframe src="purchase-request.html" title="Interactive 12-step fictional purchase-request diagram" loading="lazy"></iframe></div>
+</div>
+<figure class="embedded-viewer"><div class="window"><div class="bar"><span>PURCHASE REQUEST / FULL HTML VIEWER</span><span>12 steps · 4 departments</span></div><iframe src="purchase-request.html" title="Interactive 12-step fictional purchase-request diagram" loading="lazy"></iframe></div>
 <figcaption><span>Generated from the included purchase-request workbook. All example data is invented.</span><span>Scroll right inside the diagram to follow the steps; scroll down to see more departments.</span></figcaption></figure>
 <p class="viewer-link"><a href="purchase-request.html">Open the full purchase-request viewer ↗</a></p>
 </section>
