@@ -1,7 +1,51 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Process Swimlane Generator — Excel to swimlanes</title><meta name="description" content="Turn a linear Excel workflow into an SVG diagram and offline HTML viewer with a local Windows tool."><link rel="stylesheet" href="style.css"></head>
-<body><div class="wrap"><header class="top"><span class="brand">Process Swimlane Generator</span><span class="edition">EXCEL → SWIMLANES</span></header>
-<main><section class="hero" aria-labelledby="headline"><div class="intro"><p class="eyebrow">From spreadsheet to shared understanding</p><h1 id="headline">Turn an Excel process<br>into a <span>swimlane diagram.</span></h1><p class="lead">A local Windows tool for analysts and process owners who document linear workflows in Excel. Make the sequence, departments and sections visible.</p><nav class="actions" aria-label="Get started"><a class="button primary" href="demo.html">View sample diagram ↗</a><a class="button" href="https://github.com/esst-prog2/process-swimlane-generator#install-on-windows">Try it on Windows ↗</a></nav><p class="setup-note">Runs locally on Windows with Python 3.13+. The install link opens the README command-line setup.</p></div>
-<figure><div class="window"><div class="bar"><span>EXCEL → SWIMLANES / LIVE HTML VIEWER</span><span>36 tasks · 4 departments</span></div><iframe src="demo.html" title="Interactive synthetic 36-task process diagram"></iframe></div><figcaption><span>Real generated output. Public synthetic data.</span><span>Scroll right inside the diagram to follow tasks; scroll down to see more departments.</span></figcaption></figure></section>
-<section class="how" aria-labelledby="how-title"><h2 id="how-title">From Excel to a diagram in three steps</h2><ol><li><strong>Prepare your workbook.</strong> Use the documented Excel template for one complete linear workflow.</li><li><strong>Run the Windows command.</strong> Install with Python, then run <code>process-map your-workbook.xlsx --viewer</code>.</li><li><strong>Open your outputs.</strong> Share the SVG or explore the offline HTML with frozen department labels and section bands.</li></ol></section><section class="details" aria-label="What you get"><article><span class="label">01 / TWO OUTPUTS</span><h2>A diagram to share. A viewer to explore.</h2><p>Export a standalone SVG, or add the self-contained HTML viewer for offline browsing. Your workflow is generated locally on Windows.</p><a href="sample.svg">Inspect the SVG export ↗</a></article><article><span class="label">02 / KEEP YOUR PLACE</span><h2>Follow the work across departments.</h2><p>Frozen department labels stay in view as you scroll horizontally. Soft section bands and dashed boundaries separate phases, with one heading for each contiguous band.</p></article></section></main>
-<footer><span>Excel in. A clearer linear workflow out.</span><span>Python 3.13+ · Windows · Offline viewer</span></footer></div></body></html>
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process Swimlane Generator — See who does what</title>
+<meta name="description" content="Turn an Excel task list into a diagram showing each step, the department responsible, and what happens next. Follow a fictional purchase request.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body><div class="wrap">
+<header class="top"><span class="brand">Process Swimlane Generator</span><span class="edition">EXCEL → SWIMLANES</span></header>
+<main>
+<section class="hero" aria-labelledby="headline"><div class="intro">
+<p class="eyebrow">For people who document processes in Excel</p>
+<h1 id="headline">See who does what,<br><span>from an Excel task list.</span></h1>
+<p class="lead">Turn a linear workflow into a diagram that shows each step, the department responsible, and what happens next. Generate an SVG and an offline HTML viewer locally on Windows.</p>
+<nav class="actions" aria-label="Get started"><a class="button primary" href="#purchase-example">Follow a purchase request ↓</a><a class="button" href="https://github.com/esst-prog2/process-swimlane-generator#install-on-windows">Set up on Windows ↗</a></nav>
+<p class="setup-note">Setup requires Python 3.13+ and PowerShell. The setup link opens the installation instructions.</p>
+</div></section>
+<section class="example" id="purchase-example" aria-labelledby="example-title">
+<h2 id="example-title">From a request for supplies to delivery</h2>
+<p class="lead">Follow a fictional purchase request through Requesting, Purchasing, Finance and Receiving. See where responsibility changes hands.</p>
+<p class="example-meta">12 steps · 4 departments · Invented example data</p>
+<div class="before-after">
+<article><h3>Start with rows in Excel</h3><p>The first three tasks from the included workbook, with selected columns shown.</p>
+<table><caption class="visually-hidden">Purchase-request workbook excerpt</caption><thead><tr><th scope="col">ID</th><th scope="col">Task</th><th scope="col">Department</th></tr></thead><tbody>
+<tr><td>001</td><td>Identify the required supplies</td><td>Requesting</td></tr>
+<tr><td>002</td><td>Describe quantities and purpose</td><td>Requesting</td></tr>
+<tr><td>003</td><td>Check the request is complete</td><td>Purchasing</td></tr>
+</tbody></table><a href="purchase_request.xlsx" download>Download the example workbook ↓</a></article>
+<article><h3>Follow the handoff</h3><p>The same three steps, grouped by who does the work. This is a simplified reading guide to the full diagram below.</p>
+<ol class="handoff">
+<li><span class="department">Requesting</span><strong>001 · Identify the required supplies</strong></li>
+<li><span class="department">Requesting</span><strong>002 · Describe quantities and purpose</strong></li>
+<li><span class="department">Purchasing</span><strong>003 · Check the request is complete</strong></li>
+</ol></article></div>
+<figure><div class="window"><div class="bar"><span>PURCHASE REQUEST / FULL HTML VIEWER</span><span>12 steps · 4 departments</span></div><iframe src="purchase-request.html" title="Interactive 12-step fictional purchase-request diagram" loading="lazy"></iframe></div>
+<figcaption><span>Generated from the included purchase-request workbook. All example data is invented.</span><span>Scroll right inside the diagram to follow the steps; scroll down to see more departments.</span></figcaption></figure>
+<p class="viewer-link"><a href="purchase-request.html">Open the full purchase-request viewer ↗</a></p>
+</section>
+<section class="how" aria-labelledby="how-title"><h2 id="how-title">From Excel to a diagram in three steps</h2><ol>
+<li><strong>Prepare your workbook.</strong> Copy the example and enter your tasks, departments and next-step IDs. Use one complete linear workflow.</li>
+<li><strong>Run the Windows command.</strong> Follow the setup instructions, then run <code>.\.venv\Scripts\process-map.exe your-workbook.xlsx --viewer</code> from the repository folder.</li>
+<li><strong>Open your outputs.</strong> Share the SVG or explore the offline HTML viewer.</li>
+</ol></section>
+<section class="details" aria-label="What you get">
+<article><span class="label">01 / TWO OUTPUTS</span><h2>A diagram to share. A viewer to explore.</h2><p>Export a standalone SVG, or add the self-contained HTML viewer for offline browsing. Your workflow is generated locally on Windows.</p><a href="purchase-request.svg">Inspect the purchase-request SVG ↗</a></article>
+<article><span class="label">02 / KEEP YOUR PLACE</span><h2>Keep track of who handles each step.</h2><p>Department names stay visible as you scroll. Coloured sections group the steps into phases.</p></article>
+</section>
+<section class="stress-test" aria-labelledby="stress-title"><span class="label">OPTIONAL / LARGER TECHNICAL EXAMPLE</span><h2 id="stress-title">Explore the 36-task stress test</h2><p>This synthetic example uses placeholder task names to demonstrate scrolling, frozen department labels and section bands across a longer workflow.</p><p><a href="demo.html">Open the 36-task stress test ↗</a> · <a href="sample.svg">Inspect its SVG ↗</a></p></section>
+</main><footer><span>Excel in. A clearer linear workflow out.</span><span>Python 3.13+ · Windows · Offline viewer</span></footer>
+</div></body></html>
