@@ -19,3 +19,6 @@ h1{letter-spacing:-.035em;text-wrap:balance}h1 span{display:block}.audience{font
 .handoff-guide .transfer-bridge{display:flex;gap:12px;align-items:center;margin-left:20px;padding:4px 0;font-size:14px;font-weight:650}
 .handoff-guide .transfer-bridge svg{flex:none}
 @media(max-width:600px){.handoff-guide .request-block{margin-right:16px;padding-left:16px;padding-right:16px}.handoff-guide .purchase-block{margin-left:16px;padding-left:16px;padding-right:16px}.handoff-guide .transfer-bridge{margin-left:4px;gap:4px}.handoff-guide .transfer-bridge svg{width:48px}}
+
+/* HW10 video: keep the existing page layout and native playback controls. */
+.video-story{margin:40px 0}.video-story h2{margin-bottom:12px}.video-story p{max-width:680px}.video-story video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#f5f3eb}
