@@ -1,0 +1,65 @@
+<template>
+<style>
+#root {position:absolute;inset:0;background:#f5f3eb;color:#183e33;font-family:Inter,sans-serif;overflow:hidden}
+.caption{position:absolute;inset:0;pointer-events:none}
+h1{position:absolute;left:128px;top:53px;margin:0;font-size:48px;font-weight:700;line-height:1.2}
+.department{position:absolute;left:128px;top:125px;margin:0;font-size:30px;font-weight:700}
+#window{position:absolute;left:64px;top:205px;width:1152px;height:360px;overflow:hidden;background:white;border-top:2px solid #bcc7bc;border-bottom:2px solid #bcc7bc}
+#camera{position:absolute;left:0;top:0;width:5272px;height:816px;transform-origin:0 0}
+#camera img,#camera svg{position:absolute;inset:0;width:5272px;height:816px}
+#provenance{position:absolute;left:128px;top:605px;margin:0;font-size:22px}
+#source{position:absolute;left:128px;top:648px;margin:0;font-size:22px}
+</style>
+<div id="root" data-composition-id="journey" data-duration="30" data-width="1280" data-height="720">
+<div id="window" data-layout-allow-overflow><div id="camera" data-layout-allow-overflow><img src="assets/purchase-request.svg" alt="Actual generated purchase-request SVG"/><svg viewBox="0 0 5272 816" aria-hidden="true"><rect id="focus-003" x="1032.0" y="334.0" width="352.0" height="100.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-003" d="M 960 224.0 H 996.0 V 384.0 H 1032" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-004" x="1456.0" y="488.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-004" d="M 1384 384.0 H 1420.0 V 544.0 H 1456" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-005" x="1880.0" y="328.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-005" d="M 1808 544.0 H 1844.0 V 384.0 H 1880" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-006" x="2304.0" y="328.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-006" d="M 2232 384.0 H 2268.0 V 384.0 H 2304" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-007" x="2728.0" y="494.0" width="352.0" height="100.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-007" d="M 2656 384.0 H 2692.0 V 544.0 H 2728" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-008" x="3152.0" y="328.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-008" d="M 3080 544.0 H 3116.0 V 384.0 H 3152" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-009" x="3576.0" y="648.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-009" d="M 3504 384.0 H 3540.0 V 704.0 H 3576" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-010" x="4000.0" y="648.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-010" d="M 3928 704.0 H 3964.0 V 704.0 H 4000" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-011" x="4424.0" y="174.0" width="352.0" height="100.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-011" d="M 4352 704.0 H 4388.0 V 224.0 H 4424" fill="none" stroke="#116149" stroke-width="5" opacity="0"/><rect id="focus-012" x="4848.0" y="328.0" width="352.0" height="112.0" rx="8" fill="none" stroke="#116149" stroke-width="4" opacity="0"/><path id="route-012" d="M 4776 224.0 H 4812.0 V 384.0 H 4848" fill="none" stroke="#116149" stroke-width="5" opacity="0"/></svg></div></div>
+<div id="caption-003" class="clip caption" data-beat="task-003" data-start="0" data-duration="3" data-track-index="2" data-hold><h1>Who handles it next?</h1><p class="department">Requesting → Purchasing</p></div>
+<div id="caption-004" class="clip caption" data-beat="task-004" data-start="3" data-duration="3" data-track-index="2" data-hold><h1>Check the budget</h1><p class="department">Finance</p></div>
+<div id="caption-005" class="clip caption" data-beat="task-005" data-start="6" data-duration="2.5" data-track-index="2" data-hold><h1>Ask for quotations</h1><p class="department">Purchasing</p></div>
+<div id="caption-006" class="clip caption" data-beat="task-006" data-start="8.5" data-duration="2.5" data-track-index="2" data-hold><h1>Choose a quotation</h1><p class="department">Purchasing</p></div>
+<div id="caption-007" class="clip caption" data-beat="task-007" data-start="11" data-duration="3" data-track-index="2" data-hold><h1>Approve the spend</h1><p class="department">Finance</p></div>
+<div id="caption-008" class="clip caption" data-beat="task-008" data-start="14" data-duration="3" data-track-index="2" data-hold><h1>Issue the order</h1><p class="department">Purchasing</p></div>
+<div id="caption-009" class="clip caption" data-beat="task-009" data-start="17" data-duration="3" data-track-index="2" data-hold><h1>Receive the supplies</h1><p class="department">Receiving</p></div>
+<div id="caption-010" class="clip caption" data-beat="task-010" data-start="20" data-duration="3" data-track-index="2" data-hold><h1>Check the quantities</h1><p class="department">Receiving</p></div>
+<div id="caption-011" class="clip caption" data-beat="task-011" data-start="23" data-duration="3" data-track-index="2" data-hold><h1>Confirm the supplies</h1><p class="department">Requesting</p></div>
+<div id="caption-012" class="clip caption" data-beat="task-012" data-start="26" data-duration="4" data-track-index="2" data-hold><h1>Complete the request</h1><p class="department">Purchasing</p></div>
+<p id="provenance">Animated highlights on the generated diagram</p>
+<p id="source" class="clip" data-start="0" data-duration="26" data-track-index="3">Source: purchase_request.xlsx · Fictional example</p><div id="ending" class="clip" data-start="26" data-duration="4" data-track-index="3"><p style="position:absolute;left:128px;top:640px;margin:0;background:#f5f3eb;font-size:28px">Process Swimlane Generator · Excel → SVG + offline HTML</p></div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+gsap.set("#camera",{"x": -698.8800000000001, "y": -209.12, "scale": 1.28});
+tl.to("#camera", {x:-1840.0, y:-588.0, scale:2, duration:0.7, ease:"power2.inOut"}, 0.5);
+tl.set("#route-003", {opacity:1}, 0); tl.set("#focus-003", {opacity:1}, 0.9);
+tl.to("#camera", {x:-2688.0, y:-908.0, scale:2, duration:0.55, ease:"power2.inOut"}, 2.45);
+tl.set("#route-004", {opacity:1}, 2.45); tl.set("#focus-004", {opacity:1}, 3);
+tl.set("#focus-003, #route-003", {opacity:0}, 3);
+tl.to("#camera", {x:-3536.0, y:-588.0, scale:2, duration:0.55, ease:"power2.inOut"}, 5.45);
+tl.set("#route-005", {opacity:1}, 5.45); tl.set("#focus-005", {opacity:1}, 6);
+tl.set("#focus-004, #route-004", {opacity:0}, 6);
+tl.to("#camera", {x:-4384.0, y:-588.0, scale:2, duration:0.55, ease:"power2.inOut"}, 7.95);
+tl.set("#route-006", {opacity:1}, 7.95); tl.set("#focus-006", {opacity:1}, 8.5);
+tl.set("#focus-005, #route-005", {opacity:0}, 8.5);
+tl.to("#camera", {x:-5232.0, y:-908.0, scale:2, duration:0.55, ease:"power2.inOut"}, 10.45);
+tl.set("#route-007", {opacity:1}, 10.45); tl.set("#focus-007", {opacity:1}, 11);
+tl.set("#focus-006, #route-006", {opacity:0}, 11);
+tl.to("#camera", {x:-6080.0, y:-588.0, scale:2, duration:0.55, ease:"power2.inOut"}, 13.45);
+tl.set("#route-008", {opacity:1}, 13.45); tl.set("#focus-008", {opacity:1}, 14);
+tl.set("#focus-007, #route-007", {opacity:0}, 14);
+tl.to("#camera", {x:-1882.333333333333, y:-197.77777777777777, scale:0.6944444444444444, duration:0.35, ease:"power2.inOut"}, 16.15);
+tl.to("#camera", {x:-6928.0, y:-1228.0, scale:2, duration:0.5, ease:"power2.inOut"}, 16.5);
+tl.set("#route-009", {opacity:1}, 16.15); tl.set("#focus-009", {opacity:1}, 17);
+tl.set("#focus-008, #route-008", {opacity:0}, 17);
+tl.to("#camera", {x:-7776.0, y:-1228.0, scale:2, duration:0.55, ease:"power2.inOut"}, 19.45);
+tl.set("#route-010", {opacity:1}, 19.45); tl.set("#focus-010", {opacity:1}, 20);
+tl.set("#focus-009, #route-009", {opacity:0}, 20);
+tl.to("#camera", {x:-1647.6486486486488, y:-55.13513513513516, scale:0.5067567567567568, duration:0.35, ease:"power2.inOut"}, 22.15);
+tl.to("#camera", {x:-8624.0, y:-268.0, scale:2, duration:0.5, ease:"power2.inOut"}, 22.5);
+tl.set("#route-011", {opacity:1}, 22.15); tl.set("#focus-011", {opacity:1}, 23);
+tl.set("#focus-010, #route-010", {opacity:0}, 23);
+tl.to("#camera", {x:-9472.0, y:-588.0, scale:2, duration:0.55, ease:"power2.inOut"}, 25.45);
+tl.set("#route-012", {opacity:1}, 25.45); tl.set("#focus-012", {opacity:1}, 26);
+tl.set("#focus-011, #route-011", {opacity:0}, 26);
+window.__timelines=window.__timelines||{};
+window.__timelines.journey=tl;
+</script>
+</template>

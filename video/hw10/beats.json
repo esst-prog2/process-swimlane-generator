@@ -1,0 +1,82 @@
+[
+  {
+    "start": 0,
+    "end": 3,
+    "task_id": "003",
+    "caption": "Who handles it next?",
+    "department": "Purchasing",
+    "description": "Check the request is complete"
+  },
+  {
+    "start": 3,
+    "end": 6,
+    "task_id": "004",
+    "caption": "Check the budget",
+    "department": "Finance",
+    "description": "Confirm the available budget"
+  },
+  {
+    "start": 6,
+    "end": 8.5,
+    "task_id": "005",
+    "caption": "Ask for quotations",
+    "department": "Purchasing",
+    "description": "Request supplier quotations"
+  },
+  {
+    "start": 8.5,
+    "end": 11,
+    "task_id": "006",
+    "caption": "Choose a quotation",
+    "department": "Purchasing",
+    "description": "Select a suitable quotation"
+  },
+  {
+    "start": 11,
+    "end": 14,
+    "task_id": "007",
+    "caption": "Approve the spend",
+    "department": "Finance",
+    "description": "Approve the proposed spend"
+  },
+  {
+    "start": 14,
+    "end": 17,
+    "task_id": "008",
+    "caption": "Issue the order",
+    "department": "Purchasing",
+    "description": "Issue the purchase order"
+  },
+  {
+    "start": 17,
+    "end": 20,
+    "task_id": "009",
+    "caption": "Receive the supplies",
+    "department": "Receiving",
+    "description": "Receive the ordered supplies"
+  },
+  {
+    "start": 20,
+    "end": 23,
+    "task_id": "010",
+    "caption": "Check the quantities",
+    "department": "Receiving",
+    "description": "Check delivered quantities"
+  },
+  {
+    "start": 23,
+    "end": 26,
+    "task_id": "011",
+    "caption": "Confirm the supplies",
+    "department": "Requesting",
+    "description": "Confirm the supplies meet the request"
+  },
+  {
+    "start": 26,
+    "end": 30,
+    "task_id": "012",
+    "caption": "Complete the request",
+    "department": "Purchasing",
+    "description": "Record completion of the request"
+  }
+]
