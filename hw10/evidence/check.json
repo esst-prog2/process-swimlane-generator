@@ -1,0 +1,320 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\User\\OneDrive\\Documents\\Github\\process-swimlane-generator\\hw10\\smoke\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"first\"> is a timeline element that contains nested <h1>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#first",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\User\\OneDrive\\Documents\\Github\\process-swimlane-generator\\hw10\\smoke\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"first\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"second\"> is a timeline element that contains nested <h1>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#second",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\User\\OneDrive\\Documents\\Github\\process-swimlane-generator\\hw10\\smoke\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"second\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 2,
+    "samples": [
+      0.111,
+      0.333,
+      0.556,
+      0.778,
+      1,
+      1.222,
+      1.444,
+      1.667,
+      1.889
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false,
+    "faceCheck": {
+      "ran": true,
+      "candidates": 0,
+      "faces": 0
+    }
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.111,
+      0.556,
+      1,
+      1.444,
+      1.889
+    ],
+    "checked": 10,
+    "passed": 10
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Frame sequence A\" (3 words) is on screen 1.00 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Frame sequence A",
+        "selector": "#first > p:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 64,
+          "y": 80,
+          "width": 177.06,
+          "height": 24
+        },
+        "time": 0,
+        "words": 3,
+        "seconds": 0.996,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 0,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.125,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.25,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.375,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.5,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.625,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.75,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 0.875,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.125,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.25,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"Frame sequence B\" (3 words) is on screen 1.00 s (±0.01 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "Frame sequence B",
+        "selector": "#second > p:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 64,
+          "y": 80,
+          "width": 176.36,
+          "height": 24
+        },
+        "time": 1,
+        "words": 3,
+        "seconds": 1.004,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 0.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 0.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 0.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.125,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.25,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.375,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.5,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.625,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.75,
+            "opacity": 1,
+            "heightPx": 24
+          },
+          {
+            "time": 1.875,
+            "opacity": 1,
+            "heightPx": 24
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 16
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 1,
+    "findings": [
+      {
+        "code": "audio_none",
+        "severity": "info",
+        "message": "The film has no sound: no clip in it plays audio.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0
+      }
+    ]
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}
